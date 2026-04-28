@@ -3,19 +3,15 @@
 // This file is generated from template in file `flutter_tools/lib/src/flutter_plugins.dart`.
 //
 
-// @dart = 3.9
+// @dart = 3.4
 
 import 'dart:io'; // flutter_ignore: dart_io_import.
-import 'package:shared_preferences_android/shared_preferences_android.dart';
-import 'package:webview_flutter_android/webview_flutter_android.dart';
-import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-import 'package:path_provider_linux/path_provider_linux.dart';
-import 'package:shared_preferences_linux/shared_preferences_linux.dart';
-import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-import 'package:path_provider_windows/path_provider_windows.dart';
-import 'package:shared_preferences_windows/shared_preferences_windows.dart';
+import 'package:flutter_inappwebview_android/flutter_inappwebview_android.dart';
+import 'package:flutter_inappwebview_ios/flutter_inappwebview_ios.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_inappwebview_macos/flutter_inappwebview_macos.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_inappwebview_windows/flutter_inappwebview_windows.dart';
 
 @pragma('vm:entry-point')
 class _PluginRegistrant {
@@ -24,95 +20,59 @@ class _PluginRegistrant {
   static void register() {
     if (Platform.isAndroid) {
       try {
-        SharedPreferencesAndroid.registerWith();
+        AndroidInAppWebViewPlatform.registerWith();
       } catch (err) {
         print(
-          '`shared_preferences_android` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
-      try {
-        AndroidWebViewPlatform.registerWith();
-      } catch (err) {
-        print(
-          '`webview_flutter_android` threw an error: $err. '
+          '`flutter_inappwebview_android` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
 
     } else if (Platform.isIOS) {
       try {
-        SharedPreferencesFoundation.registerWith();
+        IOSInAppWebViewPlatform.registerWith();
       } catch (err) {
         print(
-          '`shared_preferences_foundation` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
-      try {
-        WebKitWebViewPlatform.registerWith();
-      } catch (err) {
-        print(
-          '`webview_flutter_wkwebview` threw an error: $err. '
+          '`flutter_inappwebview_ios` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
 
     } else if (Platform.isLinux) {
       try {
-        PathProviderLinux.registerWith();
+        DeviceInfoPlusLinuxPlugin.registerWith();
       } catch (err) {
         print(
-          '`path_provider_linux` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
-      try {
-        SharedPreferencesLinux.registerWith();
-      } catch (err) {
-        print(
-          '`shared_preferences_linux` threw an error: $err. '
+          '`device_info_plus` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
 
     } else if (Platform.isMacOS) {
       try {
-        SharedPreferencesFoundation.registerWith();
+        MacOSInAppWebViewPlatform.registerWith();
       } catch (err) {
         print(
-          '`shared_preferences_foundation` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
-      try {
-        WebKitWebViewPlatform.registerWith();
-      } catch (err) {
-        print(
-          '`webview_flutter_wkwebview` threw an error: $err. '
+          '`flutter_inappwebview_macos` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
 
     } else if (Platform.isWindows) {
       try {
-        PathProviderWindows.registerWith();
+        DeviceInfoPlusWindowsPlugin.registerWith();
       } catch (err) {
         print(
-          '`path_provider_windows` threw an error: $err. '
+          '`device_info_plus` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
 
       try {
-        SharedPreferencesWindows.registerWith();
+        WindowsInAppWebViewPlatform.registerWith();
       } catch (err) {
         print(
-          '`shared_preferences_windows` threw an error: $err. '
+          '`flutter_inappwebview_windows` threw an error: $err. '
           'The app may not function as expected until you remove this plugin from pubspec.yaml'
         );
       }
