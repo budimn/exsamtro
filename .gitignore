@@ -1,2 +1,78 @@
-# Generated file - do not commit.
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# The Flutter SDK
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
 /build/
+
+# Web-specific
+.dart_tool/
+**/generated_plugin_registrant.dart
+
+# Build results
+.xcconfig
+.xcsettings
+/ios/Flutter/App.framework
+/ios/Flutter/Debug.xcconfig
+/ios/Flutter/Release.xcconfig
+/ios/Flutter/flutter_export_environment.sh
+/ios/Pods/
+/ios/Runner.xcodeproj/project.xcworkspace/
+/ios/Runner.xcodeproj/xcshareddata/
+/ios/Runner/Assets.xcassets/AppIcon.appiconset/
+/ios/Runner/Assets.xcassets/LaunchImage.imageset/
+/ios/Runner/GeneratedPluginRegistrant.*
+/ios/ServiceDefinitions.json
+
+# Android
+#
+# Ignore all files in the build directory.
+/android/build/
+# Don't ignore the gradle wrapper.
+!/android/gradle/wrapper/gradle-wrapper.jar
+# Allow committing the signing config files.
+!/android/**/key.properties
+
+# Windows
+#
+# Ignore all files in the build directory.
+/windows/build/
+# Don't ignore the runner folder.
+!/windows/runner/
+
+# Linux
+#
+# Ignore all files in the build directory.
+/linux/build/
+# Don't ignore the my_application.cc file.
+!/linux/my_application.cc
+
+# macOS
+#
+# Ignore all files in the build directory.
+/macos/build/
+# Don't ignore the runner folder.
+!/macos/runner/
+
+# Generated files
+lib/generated_plugin_registrant.dart
+lib/firebase_options.dart
