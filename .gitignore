@@ -1,18 +1,2 @@
-# Build artifacts
+# Generated file - do not commit.
 /build/
-
-# Compressed files
-*.tar.gz
-
-# IDE-specific files
-.idea/
-.vscode/
-*.iml
-
-# Flutter/Dart-specific files
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-pubspec.lock
