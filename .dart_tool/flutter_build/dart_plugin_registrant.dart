@@ -8,9 +8,7 @@
 import 'dart:io'; // flutter_ignore: dart_io_import.
 import 'package:flutter_inappwebview_android/flutter_inappwebview_android.dart';
 import 'package:flutter_inappwebview_ios/flutter_inappwebview_ios.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_inappwebview_macos/flutter_inappwebview_macos.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_inappwebview_windows/flutter_inappwebview_windows.dart';
 
 @pragma('vm:entry-point')
@@ -39,15 +37,6 @@ class _PluginRegistrant {
       }
 
     } else if (Platform.isLinux) {
-      try {
-        DeviceInfoPlusLinuxPlugin.registerWith();
-      } catch (err) {
-        print(
-          '`device_info_plus` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
     } else if (Platform.isMacOS) {
       try {
         MacOSInAppWebViewPlatform.registerWith();
@@ -59,15 +48,6 @@ class _PluginRegistrant {
       }
 
     } else if (Platform.isWindows) {
-      try {
-        DeviceInfoPlusWindowsPlugin.registerWith();
-      } catch (err) {
-        print(
-          '`device_info_plus` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
       try {
         WindowsInAppWebViewPlatform.registerWith();
       } catch (err) {

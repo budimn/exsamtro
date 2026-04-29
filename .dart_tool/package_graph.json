@@ -10,11 +10,8 @@
         "cupertino_icons",
         "flutter",
         "flutter_inappwebview",
-        "flutter_windowmanager",
         "mobile_scanner",
-        "provider",
-        "screen_state",
-        "vibration"
+        "provider"
       ],
       "devDependencies": [
         "flutter_launcher_icons",
@@ -73,34 +70,12 @@
       ]
     },
     {
-      "name": "vibration",
-      "version": "1.9.0",
-      "dependencies": [
-        "flutter",
-        "vibration_platform_interface"
-      ]
-    },
-    {
-      "name": "screen_state",
-      "version": "3.0.1",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
       "name": "provider",
       "version": "6.1.5+1",
       "dependencies": [
         "collection",
         "flutter",
         "nested"
-      ]
-    },
-    {
-      "name": "flutter_windowmanager",
-      "version": "0.2.0",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
@@ -289,15 +264,6 @@
       ]
     },
     {
-      "name": "vibration_platform_interface",
-      "version": "0.0.3",
-      "dependencies": [
-        "device_info_plus",
-        "flutter",
-        "plugin_platform_interface"
-      ]
-    },
-    {
       "name": "nested",
       "version": "1.0.0",
       "dependencies": [
@@ -407,7 +373,7 @@
     },
     {
       "name": "async",
-      "version": "2.13.0",
+      "version": "2.13.1",
       "dependencies": [
         "collection",
         "meta"
@@ -447,21 +413,6 @@
       ]
     },
     {
-      "name": "device_info_plus",
-      "version": "11.5.0",
-      "dependencies": [
-        "device_info_plus_platform_interface",
-        "ffi",
-        "file",
-        "flutter",
-        "flutter_web_plugins",
-        "meta",
-        "web",
-        "win32",
-        "win32_registry"
-      ]
-    },
-    {
       "name": "flutter_inappwebview_internal_annotations",
       "version": "1.3.0",
       "dependencies": []
@@ -485,46 +436,13 @@
     },
     {
       "name": "vm_service",
-      "version": "15.0.2",
+      "version": "15.1.0",
       "dependencies": []
-    },
-    {
-      "name": "win32_registry",
-      "version": "2.1.0",
-      "dependencies": [
-        "ffi",
-        "meta",
-        "win32"
-      ]
-    },
-    {
-      "name": "win32",
-      "version": "5.15.0",
-      "dependencies": [
-        "ffi"
-      ]
-    },
-    {
-      "name": "file",
-      "version": "7.0.1",
-      "dependencies": [
-        "meta",
-        "path"
-      ]
     },
     {
       "name": "ffi",
       "version": "2.2.0",
       "dependencies": []
-    },
-    {
-      "name": "device_info_plus_platform_interface",
-      "version": "7.0.3",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "plugin_platform_interface"
-      ]
     }
   ],
   "configVersion": 1

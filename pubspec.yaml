@@ -11,10 +11,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.6
   flutter_inappwebview: ^6.0.0
-  flutter_windowmanager: ^0.2.0
+  # flutter_windowmanager: ^0.2.0 # Dinonaktifkan sementara karena masalah build
   provider: ^6.1.2
-  screen_state: ^3.0.0
-  vibration: ^1.8.4
+  # screen_state: ^3.0.0 # Dinonaktifkan karena masalah build
+  # vibration: ^1.8.4 # Dinonaktifkan karena masalah build
   mobile_scanner: ^7.2.0
 
 

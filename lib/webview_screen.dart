@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import untuk SystemNavigator
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+// import 'package:flutter_windowmanager/flutter_windowmanager.dart'; // Dinonaktifkan sementara
 import 'package:provider/provider.dart';
 import 'package:exsamtro/app_state.dart';
 
@@ -15,38 +15,70 @@ class WebViewScreen extends StatefulWidget {
   State<WebViewScreen> createState() => _WebViewScreenState();
 }
 
-class _WebViewScreenState extends State<WebViewScreen> {
-  late InAppWebViewController _webViewController;
+// Menambahkan WidgetsBindingObserver untuk mendeteksi siklus hidup aplikasi
+class _WebViewScreenState extends State<WebViewScreen> with WidgetsBindingObserver {
+  InAppWebViewController? _webViewController;
+  bool _isDialogShowing = false; // Flag untuk mencegah dialog ganda
 
   @override
   void initState() {
     super.initState();
+    // Menambahkan observer
+    WidgetsBinding.instance.addObserver(this);
     // Mengaktifkan mode kiosk/penguncian saat layar ini dimuat
     _enableKioskMode();
   }
 
+  @override
+  void dispose() {
+    // Menghapus observer untuk mencegah memory leak
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  // Metode ini dipanggil setiap kali status siklus hidup aplikasi berubah
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // Jika pengguna keluar dari aplikasi (mis. menekan home)
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
+      // Tampilkan dialog hanya jika belum ada dialog yang tampil
+      if (!_isDialogShowing) {
+        _showExitDialog();
+      }
+    }
+  }
+
   Future<void> _enableKioskMode() async {
     // Mencegah tangkapan layar dan mengunci aplikasi
-    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-    // Menandai status kiosk di AppState jika diperlukan
+    // await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE); // Dinonaktifkan sementara
     Provider.of<AppState>(context, listen: false).setKioskMode(true);
   }
 
   Future<void> _showExitDialog() async {
-    bool? shouldExit = await showDialog<bool>(
+    setState(() {
+      _isDialogShowing = true; // Tandai bahwa dialog sedang ditampilkan
+    });
+    
+    await showDialog<bool>(
       context: context,
-      barrierDismissible: false, // Pengguna harus memilih salah satu opsi
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: const Text('Keluar dari Ujian?'),
         content: const Text('Aplikasi akan ditutup. Apakah Anda yakin ingin keluar dari sesi ujian ini?'),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false), // Batal, tetap di aplikasi
+            onPressed: () {
+              Navigator.of(context).pop(); // Tutup dialog
+              setState(() {
+                _isDialogShowing = false; // Tandai dialog sudah ditutup
+              });
+            },
             child: const Text('Batal'),
           ),
           TextButton(
             onPressed: () {
-              // Saat "Keluar" ditekan, tutup aplikasi sepenuhnya
+              // Tutup aplikasi sepenuhnya
               SystemNavigator.pop();
             },
             child: const Text('Keluar & Tutup'),
@@ -56,47 +88,47 @@ class _WebViewScreenState extends State<WebViewScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      // Mencegah pengguna menekan tombol kembali fisik di Android
-      onWillPop: () async {
-        if (await _webViewController.canGoBack()) {
-          _webViewController.goBack();
-          return false; // Tetap di dalam WebView
+    // Menggunakan PopScope sebagai pengganti WillPopScope yang deprecated
+    return PopScope(
+      canPop: false, // Mencegah pop default, kita akan menanganinya secara manual
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) {
+          return;
         }
-        // Jika tidak ada halaman untuk kembali, tampilkan dialog keluar
-        _showExitDialog();
-        return false; // Jangan keluar secara otomatis
+        if (_webViewController != null && await _webViewController!.canGoBack()) {
+          _webViewController!.goBack();
+        } else if (!_isDialogShowing) {
+          _showExitDialog();
+        }
       },
       child: Scaffold(
         body: SafeArea(
           child: InAppWebView(
             initialUrlRequest: URLRequest(url: WebUri(widget.url)),
-            initialOptions: InAppWebViewGroupOptions(
-              crossPlatform: InAppWebViewOptions(
-                useShouldOverrideUrlLoading: true,
-                mediaPlaybackRequiresUserGesture: false,
-              ),
-              android: AndroidInAppWebViewOptions(
-                useHybridComposition: true,
-              ),
+            // Menggunakan initialSettings sebagai pengganti initialOptions
+            initialSettings: InAppWebViewSettings(
+              useShouldOverrideUrlLoading: true,
+              mediaPlaybackRequiresUserGesture: false,
+              useHybridComposition: true,
             ),
             onWebViewCreated: (controller) {
               _webViewController = controller;
             },
-            // Menambahkan deteksi URL untuk logout
             onLoadStop: (controller, url) {
-              // Ganti 'url_logout_anda' dengan URL spesifik yang menandakan logout
-              if (url.toString().contains('logout')) {
+              if (url != null && url.toString().contains('logout')) {
+                if (!_isDialogShowing) {
                   _showExitDialog();
+                }
               }
             },
-            androidOnPermissionRequest: (controller, origin, resources) async {
-              return PermissionRequestResponse(
-                resources: resources,
-                action: PermissionRequestResponseAction.GRANT,
+            // Menggunakan onPermissionRequest sebagai pengganti androidOnPermissionRequest
+            onPermissionRequest: (controller, request) async {
+              // Menggunakan PermissionResponse dan PermissionResponseAction
+              return PermissionResponse(
+                resources: request.resources,
+                action: PermissionResponseAction.GRANT,
               );
             },
           ),

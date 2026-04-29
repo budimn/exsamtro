@@ -22,28 +22,13 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         backgroundColor: Colors.blue.shade800,
         actions: [
           IconButton(
-            icon: ValueListenableBuilder(
-              valueListenable: _scannerController.torchState,
-              builder: (context, state, child) {
-                switch (state) {
-                  case TorchState.off:
-                    return const Icon(Icons.flash_off, color: Colors.grey);
-                  case TorchState.on:
-                    return const Icon(Icons.flash_on, color: Colors.yellow);
-                }
-              },
-            ),
+            icon: const Icon(Icons.flash_on, color: Colors.white), // Ikon statis
+            tooltip: 'Nyalakan Senter',
             onPressed: () => _scannerController.toggleTorch(),
           ),
           IconButton(
-            icon: ValueListenableBuilder(
-              valueListenable: _scannerController.cameraFacingState,
-              builder: (context, state, child) {
-                return state == CameraFacing.front
-                    ? const Icon(Icons.camera_front)
-                    : const Icon(Icons.camera_rear);
-              },
-            ),
+            icon: const Icon(Icons.flip_camera_ios, color: Colors.white), // Ikon statis
+            tooltip: 'Ganti Kamera',
             onPressed: () => _scannerController.switchCamera(),
           ),
         ],
@@ -64,13 +49,12 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                   _isProcessing = true;
                 });
                 _scannerController.stop();
-                Navigator.pop(context); // Kembali dari scanner
-                Navigator.pushReplacement( // Ganti ke halaman webview
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => WebViewScreen(url: finalUrl),
                   ),
-                );
+                ).then((_) => setState(() => _isProcessing = false));
               }
             }
           }
